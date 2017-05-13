@@ -1,12 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Cupcake Visualizer</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link rel="stylesheet" href="css/cupcake.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="javascript/cupcake.js"></script>
+        <title>Cupcake Visualizer</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            
+            #footer {
+                margin-bottom: 0;
+            }
+        </style>
     </head>
     <body>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-3">Cupcake Visualizer</h1>
+                <p class="lead">A simple way to convert to and from Hostess Cupcakes.</p>
+            </div>
+        </div>
+        
+        <div>
+            <div class="d-flex justify-content-center">
+                <div class="row" style="width: 80%;">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button id="selector" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" onclick="$('#selector').html('Dollars to Cupcakes');">Dollars to Cupcakes</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Euros to Cupcakes');">Euros to Cupcakes</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Dollars');">Cupcakes to Dollars</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Euros');">Cupcakes to Euros</a>
+                                </div>
+                        </div>
+                        <input id="amount" type="text" class="form-control" aria-label="Text input with dropdown button">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="row" style="width: 30%; margin-top: 2em;">
+                    <button type="button" class="btn btn-info" style="width: 100%;" onclick="calculate();">Calculate</button>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="row" style="width: 30%; margin-top: 4em;">
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="row" style="width: 30%; margin-top: 4em;">
+                    <div id="count" class="alert alert-success text-center" role="alert" style="width: 100%; display: none;"></div>
+                    <div id="error" class="alert alert-danger text-center" role="alert" style="width: 100%; display: none;">
+                        <strong>Whoops</strong> please select an option!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="footer" class="fixed-bottom jumbotron jumbotron-fluid">
+            <div class="container">
+                <p class="lead">This was created with a bit of javascript and <a href="https://v4-alpha.getbootstrap.com/" target="_blank">Bootstram</a>, for more information check out the <a href="https://github.com/ajchili/cupcake-visualizer" target="_blank">repository</a> on Github or my <a href="http://www.kirinpatel.com" target="_blank">website</a>.</p>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        
+        <script>
+            function calculate() {
+                var selector = $('#selector');
+                var amount = $('#amount');
+                var count = $('#count');
+                var error = $('#error');
+                var type = 0;
+
+                if (selector.text() == "Type") { type = -1; }
+                else if (selector.text() == "Dollars to Cupcakes") {type = 0; }
+                else if (selector.text() == "Euros to Cupcakes") {type = 1; }
+                else if (selector.text() == "Cupcakes to Dollars") {type = 2; }
+                else if (selector.text() == "Cupcakes to Euros") {type = 3; }
+
+                amount = parseFloat(amount.val());
+
+                switch(type) {
+                    case 0:
+                        amount = parseInt((amount / 3.99) * 8);
+                        break;
+                    case 1:
+                        amount = parseInt((amount / 3.65) * 8);
+                        break;
+                    case 2:
+                        amount = parseInt((amount / 8) * 3.99);
+                        break;
+                    case 3:
+                        amount = parseInt((amount / 8) * 3.65);
+                        break;
+                    default:
+                        amount = "err";
+                        break;
+                }
+
+                if (amount != "err") {
+                    if (type == 0 || type == 1) {
+                        count.empty().append('<strong>Wohoo!</strong> That\'s ' + amount + ' Hostess Cupcakes!');
+                        count.style.display = 'block';
+                    } else if (type == 2) {
+                        count.empty().append('<strong>Wohoo!</strong> That\'s ' + amount + ' Dollars!');
+                        count.style.display = 'block';
+                    } else if (type == 3) {
+                        count.empty().append('<strong>Wohoo!</strong> That\'s ' + amount + ' Euros!');
+                        count.style.display = 'block';
+                    }
+                } else {
+                    alert("please select an option");
+                }
+            }
+        </script>
     </body>
 </html>
