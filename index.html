@@ -32,12 +32,24 @@
                     <div class="input-group">
                         <div class="input-group-btn">
                             <button id="selector" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type</button>
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu" style="overflow: scroll;max-height: 350%;">
                                     <a class="dropdown-item" onclick="$('#selector').html('Dollars to Cupcakes');">Dollars to Cupcakes</a>
                                     <a class="dropdown-item" onclick="$('#selector').html('Euros to Cupcakes');">Euros to Cupcakes</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Seconds to Cupcakes');">Seconds to Cupcakes</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Minutes to Cupcakes');">Minutes to Cupcakes</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Hours to Cupcakes');">Hours to Cupcakes</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Days to Cupcakes');">Days to Cupcakes</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Weeks to Cupcakes');">Weeks to Cupcakes</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Months to Cupcakes');">Months to Cupcakes</a>
                                     <div role="separator" class="dropdown-divider"></div>
                                     <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Dollars');">Cupcakes to Dollars</a>
                                     <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Euros');">Cupcakes to Euros</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Seconds');">Cupcakes to Seconds</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Minutes');">Cupcakes to Minutes</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Hours');">Cupcakes to Hours</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Days');">Cupcakes to Days</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Weeks');">Cupcakes to Weeks</a>
+                                    <a class="dropdown-item" onclick="$('#selector').html('Cupcakes to Months');">Cupcakes to Months</a>
                                 </div>
                         </div>
                         <input id="amount" type="text" class="form-control" aria-label="Text input with dropdown button">
@@ -69,32 +81,87 @@
         
         <script>
             function calculate() {
+                var pass = [ 'Wow', 'Crazy', 'Insane', 'Radical', 'Tubular' ];
+                var fail = [ 'Whoops.', 'Hold up...', 'EXCUSE ME!', 'Hmm, try again.', 'Where do you think you\'re going?' ];
+                
                 var selector = $('#selector');
                 var amount = $('#amount');
                 var count = $('#count');
                 var error = $('#error');
                 var type = 0;
 
-                if (selector.text() == "Type") { type = -1; }
-                else if (selector.text() == "Dollars to Cupcakes") {type = 0; }
-                else if (selector.text() == "Euros to Cupcakes") {type = 1; }
-                else if (selector.text() == "Cupcakes to Dollars") {type = 2; }
-                else if (selector.text() == "Cupcakes to Euros") {type = 3; }
+                if (selector.text() == "Type") { type = 0; }
+                else if (selector.text() == "Dollars to Cupcakes") {type = 1; }
+                else if (selector.text() == "Euros to Cupcakes") {type = 2; }
+                else if (selector.text() == "Seconds to Cupcakes") {type = 3; }
+                else if (selector.text() == "Minutes to Cupcakes") {type = 4; }
+                else if (selector.text() == "Hours to Cupcakes") {type = 5; }
+                else if (selector.text() == "Days to Cupcakes") {type = 6; }
+                else if (selector.text() == "Weeks to Cupcakes") {type = 7; }
+                else if (selector.text() == "Months to Cupcakes") {type = 8; }
+                else if (selector.text() == "Cupcakes to Dollars") {type = -1; }
+                else if (selector.text() == "Cupcakes to Euros") {type = -2; }
+                else if (selector.text() == "Cupcakes to Seconds") {type = -3; }
+                else if (selector.text() == "Cupcakes to Minutes") {type = -4; }
+                else if (selector.text() == "Cupcakes to Hours") {type = -5; }
+                else if (selector.text() == "Cupcakes to Days") {type = -6; }
+                else if (selector.text() == "Cupcakes to Weeks") {type = -7; }
+                else if (selector.text() == "Cupcakes to Months") {type = -8; }
 
-                amount = parseFloat(amount.val());
+                if (amount.val().length != 0) {
+                    amount = parseFloat(amount.val());
+                } else {
+                    type = 0;
+                }
 
                 switch(type) {
-                    case 0:
+                    case 1:
                         amount = parseInt((amount / 3.99) * 8);
                         break;
-                    case 1:
+                    case 2:
                         amount = parseInt((amount / 3.65) * 8);
                         break;
-                    case 2:
+                    case 3:
+                        amount = parseInt(amount * 3);
+                        break;
+                    case 4:
+                        amount = parseInt(amount * 183.3);
+                        break;
+                    case 5:
+                        amount = parseInt(amount * 11000);
+                        break;
+                    case 6:
+                        amount = parseInt(amount * 264000);
+                        break;
+                    case 7:
+                        amount = parseInt(amount * 1848000);
+                        break;
+                    case 8:
+                        amount = parseInt(amount * 57288000);
+                        break;
+                    case -1:
                         amount = parseInt((amount / 8) * 3.99);
                         break;
-                    case 3:
+                    case -2:
                         amount = parseInt((amount / 8) * 3.65);
+                        break;
+                    case -3:
+                        amount = parseInt(amount / 3);
+                        break;
+                    case -4:
+                        amount = parseInt(amount / 183.3);
+                        break;
+                    case -5:
+                        amount = parseInt(amount / 11000);
+                        break;
+                    case -6:
+                        amount = parseInt(amount / 264000);
+                        break;
+                    case -7:
+                        amount = parseInt(amount / 1848000);
+                        break;
+                    case -8:
+                        amount = parseInt(amount / 57288000);
                         break;
                     default:
                         amount = "err";
@@ -105,18 +172,15 @@
                 error.hide();
                 
                 if (amount != "err") {
-                    if (type == 0 || type == 1) {
-                        count.empty().append('<strong>Wow!</strong> That\'s ' + amount + ' Hostess Cupcakes!');
+                    if (type > 0) {
+                        count.empty().append('<strong>' + pass[Math.floor(Math.random() * 5)] + '</strong>, that\'s ' + amount + ' Hostess Cupcakes!');
                         count.show();
-                    } else if (type == 2) {
-                        count.empty().append('<strong>Crazy!</strong> That\'s ' + amount + ' Dollars!');
-                        count.show();
-                    } else if (type == 3) {
-                        count.empty().append('<strong>Insane!</strong> That\'s ' + amount + ' Euros!');
+                    } else if (type < 0) {
+                        count.empty().append('<storng>' + pass[Math.floor(Math.random() * 5)] + '</strong>, that\'s' + amount + selector.text().substring(11, selector.text().length) + '!');
                         count.show();
                     }
                 } else {
-                    error.empty().append('<strong>Whoops</strong> please select an option!');
+                    error.empty().append('<strong>' + fail[Math.floor(Math.random() * 5)] + '</strong> Please select an option and enter a value!');
                     error.show();
                 }
             }
